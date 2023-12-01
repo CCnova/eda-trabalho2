@@ -20,15 +20,31 @@ def generate_random_pattern(text: str, size: int) -> str:
 def generate_random_text(alphabet: List[str], size: int) -> str:
     return ''.join(random.choice(alphabet) for i in range(size))
 
+def execute_analysis():
+    for alphabet in alphabets:
+        for size in pattern_sizes:
+            text = generate_random_text(alphabet, 1000)
+            pattern = generate_random_pattern(text, size)
 
-start = time.time()
-naive_search("Hello Worldasdjsadiojaodijajncxlcznlkmadslkamalkmlckzncxsiasmasmlkmclknvlkmafmkks", "Hi")
-end = time.time()
-print(end-start)
+            start = time.time()
+            pattern_found_naive = naive_search(text, pattern)
+            end = time.time()
+            print(f"Naive Pattern found {pattern_found_naive}: {end-start}")
 
-start = time.time()
-kmp_search("Hello Worldasdjsadiojaodijajncxlcznlkmadslkamalkmlckzncxsiasmasmlkmclknvlkmafmkks", "Hi")
-end = time.time()
-print(end-start)
+            start = time.time()
+            pattern_found_kmp = kmp_search(text, pattern)
+            end = time.time()
+            print(f"KMP Pattern found {pattern_found_kmp}: {end-start}")
 
-print(generate_random_text(alphabets[3], 1000))
+# start = time.time()
+# naive_search("Hello Worldasdjsadiojaodijajncxlcznlkmadslkamalkmlckzncxsiasmasmlkmclknvlkmafmkks", "Hi")
+# end = time.time()
+# print(end-start)
+
+# start = time.time()
+# kmp_search("Hello Worldasdjsadiojaodijajncxlcznlkmadslkamalkmlckzncxsiasmasmlkmclknvlkmafmkks", "Hi")
+# end = time.time()
+# print(end-start)
+
+# print(generate_random_text(alphabets[3], 1000))
+execute_analysis()
