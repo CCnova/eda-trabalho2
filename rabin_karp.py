@@ -35,7 +35,6 @@ def rabin_karp_search(txt, pat, d):
 
             # if p == t and pat[0...M-1] = txt[i, i+1, ...i+M-1]
             if j == M:
-                print("Pattern found at index " + str(i))
                 return True
 
         # Calculate hash value for next window of text: Remove
