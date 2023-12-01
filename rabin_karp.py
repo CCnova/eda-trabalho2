@@ -1,43 +1,50 @@
 PRIME = 101
 
 
-def rabin_karp_search(text: str, pattern: str) -> bool:
-    m = len(pattern)
-    n = len(text)
-    pattern_hash = create_hash(pattern, m - 1)
-    text_hash = create_hash(text, m - 1)
-
-    for i in range(1, n - m + 2):
-        if pattern_hash == text_hash:
-            if check_equal(text[i - 1 : i + m - 1], pattern[0:]) is True:
-                return True
-        if i < n - m + 1:
-            text_hash = recalculate_hash(text, i - 1, i + m - 1, text_hash, m)
-    return False
-
-
-def check_equal(str1: str, str2: str) -> bool:
-    if len(str1) != len(str2):
-        return False
+def rabin_karp_search(txt, pat, d):
+    M = len(pat)
+    N = len(txt)
     i = 0
     j = 0
-    for i, j in zip(str1, str2):
-        if i != j:
-            return False
-    return True
+    p = 0  # hash value for pattern
+    t = 0  # hash value for txt
+    h = 1
 
+    # The value of h would be "pow(d, M-1)%q"
+    for i in range(M - 1):
+        h = (h * d) % PRIME
 
-def create_hash(input: str, end: int) -> int:
-    hash = 0
-    for i in range(end + 1):
-        hash = hash + ord(input[i]) * pow(PRIME, i)
-    return hash
+    # Calculate the hash value of pattern and first window
+    # of text
+    for i in range(M):
+        p = (d * p + ord(pat[i])) % PRIME
+        t = (d * t + ord(txt[i])) % PRIME
 
+    # Slide the pattern over text one by one
+    for i in range(N - M + 1):
+        # Check the hash values of current window of text and
+        # pattern if the hash values match then only check
+        # for characters one by one
+        if p == t:
+            # Check for characters one by one
+            for j in range(M):
+                if txt[i + j] != pat[j]:
+                    break
+                else:
+                    j += 1
 
-def recalculate_hash(
-    input: str, old_index: int, new_index: int, old_hash: int, pattern_len: int
-) -> int:
-    new_hash = old_hash - ord(input[old_index])
-    new_hash = new_hash / PRIME
-    new_hash += ord(input[new_index]) * pow(PRIME, pattern_len - 1)
-    return new_hash
+            # if p == t and pat[0...M-1] = txt[i, i+1, ...i+M-1]
+            if j == M:
+                print("Pattern found at index " + str(i))
+                return True
+
+        # Calculate hash value for next window of text: Remove
+        # leading digit, add trailing digit
+        if i < N - M:
+            t = (d * (t - ord(txt[i]) * h) + ord(txt[i + M])) % PRIME
+
+            # We might get negative values of t, converting it to
+            # positive
+            if t < 0:
+                t = t + PRIME
+    return False

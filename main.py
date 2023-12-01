@@ -112,7 +112,7 @@ def execute_analysis():
             print(f"KMP Pattern found {pattern_found_kmp}: {time_kmp}")
 
             start = time.time()
-            pattern_found_rabin_karp = rabin_karp_search(text, pattern)
+            pattern_found_rabin_karp = rabin_karp_search(text, pattern, len(alphabet))
             end = time.time()
             time_rabin_karp = end - start
             times_rabin_karp.append(time_rabin_karp)
