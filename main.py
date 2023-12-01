@@ -23,6 +23,7 @@ def generate_random_text(alphabet: List[str], size: int) -> str:
 def execute_analysis():
     for alphabet in alphabets:
         for size in pattern_sizes:
+            print(f"-------- Alphabet size: {len(alphabet)} - Pattern Size: {size} --------")
             text = generate_random_text(alphabet, 1000)
             pattern = generate_random_pattern(text, size)
 
