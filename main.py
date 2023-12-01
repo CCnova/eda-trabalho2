@@ -1,5 +1,6 @@
 from naive_search import naive_search
 from kmp import kmp_search
+from rabin_karp import rabin_karp_search
 import random
 import time
 from typing import List
@@ -42,6 +43,11 @@ def execute_analysis():
             pattern_found_kmp = kmp_search(text, pattern)
             end = time.time()
             print(f"KMP Pattern found {pattern_found_kmp}: {end-start}")
+
+            start = time.time()
+            pattern_found_rabin_karp = rabin_karp_search(text, pattern)
+            end = time.time()
+            print(f"Rabin-Karp Pattern found {pattern_found_rabin_karp}: {end-start}")
 
 # start = time.time()
 # naive_search("Hello Worldasdjsadiojaodijajncxlcznlkmadslkamalkmlckzncxsiasmasmlkmclknvlkmafmkks", "Hi")
