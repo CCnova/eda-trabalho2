@@ -1,9 +1,10 @@
+import random
+import time
+import matplotlib.pyplot as plt
+from typing import List
 from naive_search import naive_search
 from kmp import kmp_search
 from rabin_karp import rabin_karp_search
-import random
-import time
-from typing import List
 
 alphabets = [
     ["a", "b"],  # sigma_2
@@ -80,6 +81,9 @@ def generate_random_text(alphabet: List[str], size: int) -> str:
 
 def execute_analysis():
     """Execute the analysis of the algorithms."""
+    times_naive = []
+    times_kmp = []
+    times_rabin_karp = []
     for alphabet in alphabets:
         for size in pattern_sizes:
             print(
@@ -92,21 +96,29 @@ def execute_analysis():
             pattern_found_naive = naive_search(text, pattern)
             end = time.time()
             time_naive = end - start
+            times_naive.append(time_naive)
             print(f"Naive Pattern found {pattern_found_naive}: {time_naive}")
 
             start = time.time()
             pattern_found_kmp = kmp_search(text, pattern)
             end = time.time()
             time_kmp = end - start
+            times_kmp.append(time_kmp)
             print(f"KMP Pattern found {pattern_found_kmp}: {time_kmp}")
 
             start = time.time()
             pattern_found_rabin_karp = rabin_karp_search(text, pattern)
             end = time.time()
             time_rabin_karp = end - start
+            times_rabin_karp.append(time_rabin_karp)
             print(
                 f"Rabin-Karp Pattern found {pattern_found_rabin_karp}: {time_rabin_karp}"
             )
+
+    plt.plot(times_naive, label="Naive")
+    plt.plot(times_kmp, label="KMP")
+    plt.plot(times_rabin_karp, label="Rabin-Karp")
+    plt.show()
 
 
 # start = time.time()
