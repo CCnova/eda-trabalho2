@@ -37,17 +37,20 @@ def execute_analysis():
             start = time.time()
             pattern_found_naive = naive_search(text, pattern)
             end = time.time()
-            print(f"Naive Pattern found {pattern_found_naive}: {end-start}")
+            time_naive = end-start
+            print(f"Naive Pattern found {pattern_found_naive}: {time_naive}")
 
             start = time.time()
             pattern_found_kmp = kmp_search(text, pattern)
             end = time.time()
-            print(f"KMP Pattern found {pattern_found_kmp}: {end-start}")
+            time_kmp = end-start
+            print(f"KMP Pattern found {pattern_found_kmp}: {time_kmp}")
 
             start = time.time()
             pattern_found_rabin_karp = rabin_karp_search(text, pattern)
             end = time.time()
-            print(f"Rabin-Karp Pattern found {pattern_found_rabin_karp}: {end-start}")
+            time_rabin_karp = end-start
+            print(f"Rabin-Karp Pattern found {pattern_found_rabin_karp}: {time_rabin_karp}")
 
 # start = time.time()
 # naive_search("Hello Worldasdjsadiojaodijajncxlcznlkmadslkamalkmlckzncxsiasmasmlkmclknvlkmafmkks", "Hi")
