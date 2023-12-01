@@ -15,12 +15,18 @@ alphabets = [
 pattern_sizes = [2, 4, 6, 8, 10, 12, 14]
 
 def generate_random_pattern(text: str, size: int) -> str:
+    """
+    Generate a random pattern with the given text and size
+    gathering the last `size` chars of `text`.
+    """
     return text[len(text) - size:]
 
 def generate_random_text(alphabet: List[str], size: int) -> str:
+    """Generate a random text with the given alphabet and size."""
     return ''.join(random.choice(alphabet) for i in range(size))
 
 def execute_analysis():
+    """Execute the analysis of the algorithms."""
     for alphabet in alphabets:
         for size in pattern_sizes:
             print(f"-------- Alphabet size: {len(alphabet)} - Pattern Size: {size} --------")
