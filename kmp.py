@@ -1,5 +1,6 @@
 from typing import List
 
+
 def compute_lps_table(pattern: str) -> List[int]:
     lps_table = [0] * len(pattern)
     i = 1
@@ -16,6 +17,7 @@ def compute_lps_table(pattern: str) -> List[int]:
                 i += 1
 
     return lps_table
+
 
 def kmp_search(text: str, pattern: str) -> bool:
     lps_table = compute_lps_table(pattern)
