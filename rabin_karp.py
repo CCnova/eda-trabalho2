@@ -1,4 +1,4 @@
-prime = 101
+PRIME = 101
 
 
 def rabin_karp_search(text: str, pattern: str) -> bool:
@@ -30,7 +30,7 @@ def check_equal(str1: str, str2: str) -> bool:
 def create_hash(input: str, end: int) -> int:
     hash = 0
     for i in range(end + 1):
-        hash = hash + ord(input[i]) * pow(prime, i)
+        hash = hash + ord(input[i]) * pow(PRIME, i)
     return hash
 
 
@@ -38,6 +38,6 @@ def recalculate_hash(
     input: str, old_index: int, new_index: int, old_hash: int, pattern_len: int
 ) -> int:
     new_hash = old_hash - ord(input[old_index])
-    new_hash = new_hash / prime
-    new_hash += ord(input[new_index]) * pow(prime, pattern_len - 1)
+    new_hash = new_hash / PRIME
+    new_hash += ord(input[new_index]) * pow(PRIME, pattern_len - 1)
     return new_hash
