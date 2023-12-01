@@ -84,6 +84,7 @@ def execute_analysis():
     times_naive = []
     times_kmp = []
     times_rabin_karp = []
+    pairs_alphabet_pattern = []
     for alphabet in alphabets:
         for size in pattern_sizes:
             print(
@@ -115,9 +116,15 @@ def execute_analysis():
                 f"Rabin-Karp Pattern found {pattern_found_rabin_karp}: {time_rabin_karp}"
             )
 
+            pairs_alphabet_pattern.append(f"({len(alphabet)}, {size})")
+
     plt.plot(times_naive, label="Naive")
     plt.plot(times_kmp, label="KMP")
     plt.plot(times_rabin_karp, label="Rabin-Karp")
+    plt.xlabel("Pair (Alphabet Size, Pattern Size)")
+    plt.ylabel("Time (s)")
+    plt.xticks(range(len(times_naive)), pairs_alphabet_pattern)
+    plt.legend(loc="best")
     plt.show()
 
 
