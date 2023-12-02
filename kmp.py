@@ -1,4 +1,5 @@
 from typing import List
+import time
 
 
 def compute_lps_table(pattern: str) -> List[int]:
@@ -19,12 +20,15 @@ def compute_lps_table(pattern: str) -> List[int]:
     return lps_table
 
 
-def kmp_search(text: str, pattern: str) -> bool:
+def kmp_search(text: str, pattern: str):
     lps_table = compute_lps_table(pattern)
+    start = time.time()
+    number_of_comparisons = 0
     i = 0
     j = 0
     while i < len(text) and j < len(pattern):
         if text[i] == pattern[j]:
+            number_of_comparisons += 1
             i += 1
             j += 1
         else:
@@ -34,6 +38,14 @@ def kmp_search(text: str, pattern: str) -> bool:
                 i += 1
 
     if j == len(pattern):
-        return True
+        return {
+            "found": True,
+            "execution_time": time.time() - start,
+            "comparisons": number_of_comparisons,
+        }
 
-    return False
+    return {
+        "found": False,
+        "execution_time": time.time() - start,
+        "comparisons": number_of_comparisons,
+    }

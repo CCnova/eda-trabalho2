@@ -1,3 +1,5 @@
+import time
+
 NO_OF_CHARS = 256
 
 
@@ -25,16 +27,27 @@ def booyer_moore_search(txt, pat):
 
     bad_char = bad_char_heuristic(pat, m)
 
+    start = time.time()
+    number_of_comparisons = 0
     s = 0
     while s <= n - m:
         j = m - 1
 
         while j >= 0 and pat[j] == txt[s + j]:
+            number_of_comparisons += 1
             j -= 1
 
         if j < 0:
             s += m - bad_char[ord(txt[s + m])] if s + m < n else 1
-            return True
+            return {
+                "found": True,
+                "execution_time": time.time() - start,
+                "comparisons": number_of_comparisons,
+            }
         else:
             s += max(1, j - bad_char[ord(txt[s + j])])
-    return False
+    return {
+        "found": False,
+        "execution_time": time.time() - start,
+        "comparisons": number_of_comparisons,
+    }

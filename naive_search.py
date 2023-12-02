@@ -1,3 +1,6 @@
+import time
+
+
 def naive_search(text: str, pattern: str) -> bool:
     """
     Naive search algorithm O(n*m) where n is the length of text and m is the length of pattern
@@ -5,6 +8,7 @@ def naive_search(text: str, pattern: str) -> bool:
     :param pattern: pattern to search for
     :return: True if pattern is in text, False otherwise
     """
+    start = time.time()
     n = len(text)
     m = len(pattern)
     for i in range(n - m + 1):
@@ -12,5 +16,5 @@ def naive_search(text: str, pattern: str) -> bool:
         while j < m and text[i + j] == pattern[j]:
             j += 1
         if j == m:
-            return True
-    return False
+            return {"found": True, "execution_time": time.time() - start}
+    return {"found": False, "execution_time": time.time() - start}
