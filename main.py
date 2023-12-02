@@ -65,7 +65,7 @@ alphabets = [
     ],  # sigma_32
 ]
 
-pattern_sizes = [2, 4, 6, 8, 10, 12, 14, 350]
+pattern_sizes = [2, 4, 6, 8, 10, 12, 14]
 
 
 def generate_random_pattern(text: str, size: int) -> str:
@@ -98,7 +98,7 @@ def execute_analysis():
             print(
                 f"-------- Alphabet size: {len(alphabet)} - Pattern Size: {size} --------"
             )
-            text = generate_random_text(alphabet, 1000)
+            text = generate_random_text(alphabet, 100)
             pattern = generate_random_pattern(text, size)
 
             # pattern_found_naive = naive_search(text, pattern)
