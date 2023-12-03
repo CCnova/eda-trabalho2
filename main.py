@@ -276,15 +276,4 @@ def execute_analysis():
     plt.show()
 
 
-# start = time.time()
-# naive_search("Hello Worldasdjsadiojaodijajncxlcznlkmadslkamalkmlckzncxsiasmasmlkmclknvlkmafmkks", "Hi")
-# end = time.time()
-# print(end-start)
-
-# start = time.time()
-# kmp_search("Hello Worldasdjsadiojaodijajncxlcznlkmadslkamalkmlckzncxsiasmasmlkmclknvlkmafmkks", "Hi")
-# end = time.time()
-# print(end-start)
-
-# print(generate_random_text(alphabets[3], 1000))
 execute_analysis()
