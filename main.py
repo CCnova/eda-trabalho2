@@ -8,7 +8,7 @@ from kmp import kmp_search, compute_lps_table
 from booyer_moore import booyer_moore_search
 from booyer_moore_horspool import booyer_moore_horspool_search
 
-alphabets = [
+ALPHABETS = [
     ["a", "b"],  # sigma_2
     ["a", "b", "c", "d"],  # sigma_4
     [
@@ -65,7 +65,9 @@ alphabets = [
     ],  # sigma_32
 ]
 
-pattern_sizes = [2, 4, 6, 8, 10, 12, 14]
+PATTERN_SIZES = [2, 4, 6, 8, 10, 12, 14]
+
+NUMBER_OF_TESTS = 10
 
 
 def generate_random_pattern(text: str, size: int) -> str:
@@ -79,6 +81,11 @@ def generate_random_pattern(text: str, size: int) -> str:
 def generate_random_text(alphabet: List[str], size: int) -> str:
     """Generate a random text with the given alphabet and size."""
     return "".join(random.choice(alphabet) for i in range(size))
+
+
+def calculate_average(values: List[float]) -> float:
+    """Calculate the average of the given values."""
+    return sum(values) / len(values)
 
 
 def execute_analysis():
@@ -99,8 +106,8 @@ def execute_analysis():
     effort_booyer_moore = []
     effort_booyer_moore_horspool = []
     pairs_alphabet_pattern = []
-    for alphabet in alphabets:
-        for size in pattern_sizes:
+    for alphabet in ALPHABETS:
+        for size in PATTERN_SIZES:
             print(
                 f"-------- Alphabet size: {len(alphabet)} - Pattern Size: {size} --------"
             )
@@ -108,54 +115,126 @@ def execute_analysis():
             text = generate_random_text(alphabet, 1000)
             pattern = generate_random_pattern(text, size)
 
-            pattern_found_naive = naive_search(text, pattern)
-            times_naive.append(pattern_found_naive["execution_time"])
-            num_comparisons_naive.append(pattern_found_naive["comparisons"])
-            effort_naive.append(pattern_found_naive["effort"])
+            tests_times_naive = []
+            tests_num_comparisons_naive = []
+            tests_effort_naive = []
+            for i in range(NUMBER_OF_TESTS):
+                pattern_found_naive = naive_search(text, pattern)
+                tests_times_naive.append(pattern_found_naive["execution_time"])
+                tests_num_comparisons_naive.append(pattern_found_naive["comparisons"])
+                tests_effort_naive.append(pattern_found_naive["effort"])
+            times_average_naive = calculate_average(tests_times_naive)
+            num_comparisons_average_naive = calculate_average(
+                tests_num_comparisons_naive
+            )
+            effort_average_naive = calculate_average(tests_effort_naive)
+            times_naive.append(times_average_naive)
+            num_comparisons_naive.append(num_comparisons_average_naive)
+            effort_naive.append(effort_average_naive)
             print(
-                f"Naive Pattern found: {pattern_found_naive['found']}, Execution time: {pattern_found_naive['execution_time']}, Effort: {pattern_found_naive['effort']}"
+                f"Naive ------- Execution time: {times_average_naive}, Number of comparisons: {num_comparisons_average_naive}, Effort: {effort_average_naive}"
             )
 
-            pattern_found_kmp = kmp_search(text, pattern)
-            times_kmp.append(pattern_found_kmp["execution_time"])
-            num_comparisons_kmp.append(pattern_found_kmp["comparisons"])
-            effort_kmp.append(pattern_found_kmp["effort"])
+            tests_times_kmp = []
+            tests_num_comparisons_kmp = []
+            tests_effort_kmp = []
+            for i in range(NUMBER_OF_TESTS):
+                pattern_found_kmp = kmp_search(text, pattern)
+                tests_times_kmp.append(pattern_found_kmp["execution_time"])
+                tests_num_comparisons_kmp.append(pattern_found_kmp["comparisons"])
+                tests_effort_kmp.append(pattern_found_kmp["effort"])
+            times_average_kmp = calculate_average(tests_times_kmp)
+            num_comparisons_average_kmp = calculate_average(tests_num_comparisons_kmp)
+            effort_average_kmp = calculate_average(tests_effort_kmp)
+            times_kmp.append(times_average_kmp)
+            num_comparisons_kmp.append(num_comparisons_average_kmp)
+            effort_kmp.append(effort_average_kmp)
             print(
-                f"KMP Pattern found: {pattern_found_kmp['found']}, Execution time: {pattern_found_kmp['execution_time']}, Effort: {pattern_found_kmp['effort']}"
+                f"KMP ------- Execution time: {times_average_kmp}, Number of comparisons: {num_comparisons_average_kmp}, Effort: {effort_average_kmp}"
             )
 
-            pattern_found_rabin_karp = rabin_karp_search(text, pattern, len(alphabet))
-            times_rabin_karp.append(pattern_found_rabin_karp["execution_time"])
-            num_comparisons_rabin_karp.append(pattern_found_rabin_karp["comparisons"])
-            effort_rabin_karp.append(pattern_found_rabin_karp["effort"])
+            tests_times_rabin_karp = []
+            tests_num_comparisons_rabin_karp = []
+            tests_effort_rabin_karp = []
+            for i in range(NUMBER_OF_TESTS):
+                pattern_found_rabin_karp = rabin_karp_search(
+                    text, pattern, len(alphabet)
+                )
+                tests_times_rabin_karp.append(
+                    pattern_found_rabin_karp["execution_time"]
+                )
+                tests_num_comparisons_rabin_karp.append(
+                    pattern_found_rabin_karp["comparisons"]
+                )
+                tests_effort_rabin_karp.append(pattern_found_rabin_karp["effort"])
+            times_average_rabin_karp = calculate_average(tests_times_rabin_karp)
+            num_comparisons_average_rabin_karp = calculate_average(
+                tests_num_comparisons_rabin_karp
+            )
+            effort_average_rabin_karp = calculate_average(tests_effort_rabin_karp)
+            times_rabin_karp.append(times_average_rabin_karp)
+            num_comparisons_rabin_karp.append(num_comparisons_average_rabin_karp)
+            effort_rabin_karp.append(effort_average_rabin_karp)
             print(
-                f"Rabin-Karp Pattern found: {pattern_found_rabin_karp['found']}, Execution time: {pattern_found_rabin_karp['execution_time']} Number of comparisons {pattern_found_rabin_karp['comparisons']}, Effort: {pattern_found_rabin_karp['effort']}"
+                f"Rabin Karp ------- Execution time: {times_average_rabin_karp}, Number of comparisons {num_comparisons_average_rabin_karp}, Effort: {effort_average_rabin_karp}"
             )
 
-            pattern_found_booyer_moore = booyer_moore_search(text, pattern)
-            times_booyer_moore.append(pattern_found_booyer_moore["execution_time"])
-            num_comparisons_booyer_moore.append(
-                pattern_found_booyer_moore["comparisons"]
+            tests_times_booyer_moore = []
+            tests_num_comparisons_booyer_moore = []
+            tests_effort_booyer_moore = []
+            for i in range(NUMBER_OF_TESTS):
+                pattern_found_booyer_moore = booyer_moore_search(text, pattern)
+                tests_times_booyer_moore.append(
+                    pattern_found_booyer_moore["execution_time"]
+                )
+                tests_num_comparisons_booyer_moore.append(
+                    pattern_found_booyer_moore["comparisons"]
+                )
+                tests_effort_booyer_moore.append(pattern_found_booyer_moore["effort"])
+            times_average_booyer_moore = calculate_average(tests_times_booyer_moore)
+            num_comparisons_average_booyer_moore = calculate_average(
+                tests_num_comparisons_booyer_moore
             )
-            effort_booyer_moore.append(pattern_found_booyer_moore["effort"])
+            effort_average_booyer_moore = calculate_average(tests_effort_booyer_moore)
+            times_booyer_moore.append(times_average_booyer_moore)
+            num_comparisons_booyer_moore.append(num_comparisons_average_booyer_moore)
+            effort_booyer_moore.append(effort_average_booyer_moore)
             print(
-                f"Booyer-Moore Pattern found: {pattern_found_booyer_moore['found']}, Execution time: {pattern_found_booyer_moore['execution_time']}, Effort: {pattern_found_booyer_moore['effort']}"
+                f"Booyer Moore ------- Execution time: {times_average_booyer_moore}, Number of comparisons: {num_comparisons_average_booyer_moore}, Effort: {effort_average_booyer_moore}"
             )
 
-            pattern_found_booyer_moore_horspool = booyer_moore_horspool_search(
-                text, pattern
+            tests_times_booyer_moore_horspool = []
+            tests_num_comparisons_booyer_moore_horspool = []
+            tests_effort_booyer_moore_horspool = []
+            for i in range(NUMBER_OF_TESTS):
+                pattern_found_booyer_moore_horspool = booyer_moore_horspool_search(
+                    text, pattern
+                )
+                tests_times_booyer_moore_horspool.append(
+                    pattern_found_booyer_moore_horspool["execution_time"]
+                )
+                tests_num_comparisons_booyer_moore_horspool.append(
+                    pattern_found_booyer_moore_horspool["comparisons"]
+                )
+                tests_effort_booyer_moore_horspool.append(
+                    pattern_found_booyer_moore_horspool["effort"]
+                )
+            times_average_booyer_moore_horspool = calculate_average(
+                tests_times_booyer_moore_horspool
             )
-            times_booyer_moore_horspool.append(
-                pattern_found_booyer_moore_horspool["execution_time"]
+            num_comparisons_average_booyer_moore_horspool = calculate_average(
+                tests_num_comparisons_booyer_moore_horspool
             )
+            effort_average_booyer_moore_horspool = calculate_average(
+                tests_effort_booyer_moore_horspool
+            )
+            times_booyer_moore_horspool.append(times_average_booyer_moore_horspool)
             num_comparisons_booyer_moore_horspool.append(
-                pattern_found_booyer_moore_horspool["comparisons"]
+                num_comparisons_average_booyer_moore_horspool
             )
-            effort_booyer_moore_horspool.append(
-                pattern_found_booyer_moore_horspool["effort"]
-            )
+            effort_booyer_moore_horspool.append(effort_average_booyer_moore_horspool)
             print(
-                f"Booyer-Moore-Horspool Pattern found: {pattern_found_booyer_moore_horspool['found']}, Execution time: {pattern_found_booyer_moore_horspool['execution_time']}, Effort: {pattern_found_booyer_moore_horspool['effort']}"
+                f"Booyer Moore Horspool ------- Execution time: {times_average_booyer_moore_horspool}, Number of comparisons: {num_comparisons_average_booyer_moore_horspool}, Effort: {effort_average_booyer_moore_horspool}"
             )
 
             pairs_alphabet_pattern.append(f"({len(alphabet)}, {size})")
