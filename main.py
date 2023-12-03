@@ -83,11 +83,12 @@ def generate_random_text(alphabet: List[str], size: int) -> str:
 
 def execute_analysis():
     """Execute the analysis of the algorithms."""
-    # times_naive = []
+    times_naive = []
     times_kmp = []
     times_rabin_karp = []
     times_booyer_moore = []
     times_booyer_moore_horspool = []
+    num_comparisons_naive = []
     num_comparisons_kmp = []
     num_comparisons_rabin_karp = []
     num_comparisons_booyer_moore = []
@@ -98,14 +99,15 @@ def execute_analysis():
             print(
                 f"-------- Alphabet size: {len(alphabet)} - Pattern Size: {size} --------"
             )
-            text = generate_random_text(alphabet, 100)
+            text = generate_random_text(alphabet, 1000)
             pattern = generate_random_pattern(text, size)
 
-            # pattern_found_naive = naive_search(text, pattern)
-            # times_naive.append(pattern_found_naive["execution_time"])
-            # print(
-            #     f"Naive Pattern found {pattern_found_naive['found']}: {pattern_found_naive['execution_time']}"
-            # )
+            pattern_found_naive = naive_search(text, pattern)
+            times_naive.append(pattern_found_naive["execution_time"])
+            num_comparisons_naive.append(pattern_found_naive["comparisons"])
+            print(
+                f"Naive Pattern found {pattern_found_naive['found']}: {pattern_found_naive['execution_time']}"
+            )
 
             pattern_found_kmp = kmp_search(text, pattern)
             times_kmp.append(pattern_found_kmp["execution_time"])
@@ -158,6 +160,7 @@ def execute_analysis():
     # plt.show()
 
     # ---------------- PLOT number of comparisons ---------------
+    plt.plot(num_comparisons_naive, label="Naive")
     plt.plot(num_comparisons_kmp, label="KMP")
     plt.plot(num_comparisons_rabin_karp, label="Rabin-Karp")
     plt.plot(num_comparisons_booyer_moore, label="Booyer-Moore")
