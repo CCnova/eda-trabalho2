@@ -118,7 +118,7 @@ def execute_analysis():
             tests_times_naive = []
             tests_num_comparisons_naive = []
             tests_effort_naive = []
-            for i in range(NUMBER_OF_TESTS):
+            for _ in range(NUMBER_OF_TESTS):
                 pattern_found_naive = naive_search(text, pattern)
                 tests_times_naive.append(pattern_found_naive["execution_time"])
                 tests_num_comparisons_naive.append(pattern_found_naive["comparisons"])
@@ -138,7 +138,7 @@ def execute_analysis():
             tests_times_kmp = []
             tests_num_comparisons_kmp = []
             tests_effort_kmp = []
-            for i in range(NUMBER_OF_TESTS):
+            for _ in range(NUMBER_OF_TESTS):
                 pattern_found_kmp = kmp_search(text, pattern)
                 tests_times_kmp.append(pattern_found_kmp["execution_time"])
                 tests_num_comparisons_kmp.append(pattern_found_kmp["comparisons"])
@@ -156,7 +156,7 @@ def execute_analysis():
             tests_times_rabin_karp = []
             tests_num_comparisons_rabin_karp = []
             tests_effort_rabin_karp = []
-            for i in range(NUMBER_OF_TESTS):
+            for _ in range(NUMBER_OF_TESTS):
                 pattern_found_rabin_karp = rabin_karp_search(
                     text, pattern, len(alphabet)
                 )
@@ -182,7 +182,7 @@ def execute_analysis():
             tests_times_booyer_moore = []
             tests_num_comparisons_booyer_moore = []
             tests_effort_booyer_moore = []
-            for i in range(NUMBER_OF_TESTS):
+            for _ in range(NUMBER_OF_TESTS):
                 pattern_found_booyer_moore = booyer_moore_search(text, pattern)
                 tests_times_booyer_moore.append(
                     pattern_found_booyer_moore["execution_time"]
@@ -206,7 +206,7 @@ def execute_analysis():
             tests_times_booyer_moore_horspool = []
             tests_num_comparisons_booyer_moore_horspool = []
             tests_effort_booyer_moore_horspool = []
-            for i in range(NUMBER_OF_TESTS):
+            for _ in range(NUMBER_OF_TESTS):
                 pattern_found_booyer_moore_horspool = booyer_moore_horspool_search(
                     text, pattern
                 )
