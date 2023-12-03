@@ -12,13 +12,16 @@ def naive_search(text: str, pattern: str) -> bool:
     n = len(text)
     m = len(pattern)
     number_of_comparisons = 0
+    effort = 0
     for i in range(n - m + 1):
+        effort += 1
         j = 0
         if text[i + j] != pattern[j]:
             number_of_comparisons += 1
             continue
 
         while j < m and text[i + j] == pattern[j]:
+            effort += 1
             number_of_comparisons += 1
             j += 1
         if j == m:
@@ -26,9 +29,11 @@ def naive_search(text: str, pattern: str) -> bool:
                 "found": True,
                 "execution_time": time.time() - start,
                 "comparisons": number_of_comparisons,
+                "effort": effort / len(text),
             }
     return {
         "found": False,
         "execution_time": time.time() - start,
         "comparisons": number_of_comparisons,
+        "effort": effort / len(text),
     }

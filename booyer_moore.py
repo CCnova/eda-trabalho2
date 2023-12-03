@@ -29,11 +29,14 @@ def booyer_moore_search(txt, pat):
 
     start = time.time()
     number_of_comparisons = 0
+    effort = 0
     s = 0
     while s <= n - m:
+        effort += 1
         j = m - 1
 
         while j >= 0 and pat[j] == txt[s + j]:
+            effort += 1
             number_of_comparisons += 1
             j -= 1
 
@@ -43,6 +46,7 @@ def booyer_moore_search(txt, pat):
                 "found": True,
                 "execution_time": time.time() - start,
                 "comparisons": number_of_comparisons,
+                "effort": effort / len(txt),
             }
         else:
             s += max(1, j - bad_char[ord(txt[s + j])])
@@ -50,4 +54,5 @@ def booyer_moore_search(txt, pat):
         "found": False,
         "execution_time": time.time() - start,
         "comparisons": number_of_comparisons,
+        "effort": effort / len(txt),
     }

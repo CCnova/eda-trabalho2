@@ -10,9 +10,12 @@ def booyer_moore_horspool_search(text, pattern):
 
     start = time.time()
     number_of_comparisons = 0
+    effort = 0
     for i in range(n + m + 1):
+        effort += 1
         skip_num = 0
         for j in range(m - 1, -1, -1):
+            effort += 1
             if text[i + j] != pattern[j]:
                 number_of_comparisons += 1
                 skip_num = j - skip[ord(text[i + j])]
@@ -25,6 +28,7 @@ def booyer_moore_horspool_search(text, pattern):
                 "found": True,
                 "execution_time": time.time() - start,
                 "comparisons": number_of_comparisons,
+                "effort": effort / len(text),
             }
 
         i += skip_num
@@ -33,4 +37,5 @@ def booyer_moore_horspool_search(text, pattern):
         "found": False,
         "execution_time": time.time() - start,
         "comparisons": number_of_comparisons,
+        "effort": effort / len(text),
     }

@@ -93,34 +93,43 @@ def execute_analysis():
     num_comparisons_rabin_karp = []
     num_comparisons_booyer_moore = []
     num_comparisons_booyer_moore_horspool = []
+    effort_naive = []
+    effort_kmp = []
+    effort_rabin_karp = []
+    effort_booyer_moore = []
+    effort_booyer_moore_horspool = []
     pairs_alphabet_pattern = []
     for alphabet in alphabets:
         for size in pattern_sizes:
             print(
                 f"-------- Alphabet size: {len(alphabet)} - Pattern Size: {size} --------"
             )
+
             text = generate_random_text(alphabet, 1000)
             pattern = generate_random_pattern(text, size)
 
             pattern_found_naive = naive_search(text, pattern)
             times_naive.append(pattern_found_naive["execution_time"])
             num_comparisons_naive.append(pattern_found_naive["comparisons"])
+            effort_naive.append(pattern_found_naive["effort"])
             print(
-                f"Naive Pattern found {pattern_found_naive['found']}: {pattern_found_naive['execution_time']}"
+                f"Naive Pattern found: {pattern_found_naive['found']}, Execution time: {pattern_found_naive['execution_time']}, Effort: {pattern_found_naive['effort']}"
             )
 
             pattern_found_kmp = kmp_search(text, pattern)
             times_kmp.append(pattern_found_kmp["execution_time"])
             num_comparisons_kmp.append(pattern_found_kmp["comparisons"])
+            effort_kmp.append(pattern_found_kmp["effort"])
             print(
-                f"KMP Pattern found {pattern_found_kmp['found']}: {pattern_found_kmp['execution_time']}"
+                f"KMP Pattern found: {pattern_found_kmp['found']}, Execution time: {pattern_found_kmp['execution_time']}, Effort: {pattern_found_kmp['effort']}"
             )
 
             pattern_found_rabin_karp = rabin_karp_search(text, pattern, len(alphabet))
             times_rabin_karp.append(pattern_found_rabin_karp["execution_time"])
             num_comparisons_rabin_karp.append(pattern_found_rabin_karp["comparisons"])
+            effort_rabin_karp.append(pattern_found_rabin_karp["effort"])
             print(
-                f"Rabin-Karp Pattern found {pattern_found_rabin_karp['found']}: {pattern_found_rabin_karp['execution_time']}"
+                f"Rabin-Karp Pattern found: {pattern_found_rabin_karp['found']}, Execution time: {pattern_found_rabin_karp['execution_time']} Number of comparisons {pattern_found_rabin_karp['comparisons']}, Effort: {pattern_found_rabin_karp['effort']}"
             )
 
             pattern_found_booyer_moore = booyer_moore_search(text, pattern)
@@ -128,8 +137,9 @@ def execute_analysis():
             num_comparisons_booyer_moore.append(
                 pattern_found_booyer_moore["comparisons"]
             )
+            effort_booyer_moore.append(pattern_found_booyer_moore["effort"])
             print(
-                f"Booyer-Moore Pattern found {pattern_found_booyer_moore['found']}: {pattern_found_booyer_moore['execution_time']}"
+                f"Booyer-Moore Pattern found: {pattern_found_booyer_moore['found']}, Execution time: {pattern_found_booyer_moore['execution_time']}, Effort: {pattern_found_booyer_moore['effort']}"
             )
 
             pattern_found_booyer_moore_horspool = booyer_moore_horspool_search(
@@ -141,23 +151,26 @@ def execute_analysis():
             num_comparisons_booyer_moore_horspool.append(
                 pattern_found_booyer_moore_horspool["comparisons"]
             )
+            effort_booyer_moore_horspool.append(
+                pattern_found_booyer_moore_horspool["effort"]
+            )
             print(
-                f"Booyer-Moore-Horspool Pattern found {pattern_found_booyer_moore_horspool['found']}: {pattern_found_booyer_moore_horspool['execution_time']}"
+                f"Booyer-Moore-Horspool Pattern found: {pattern_found_booyer_moore_horspool['found']}, Execution time: {pattern_found_booyer_moore_horspool['execution_time']}, Effort: {pattern_found_booyer_moore_horspool['effort']}"
             )
 
             pairs_alphabet_pattern.append(f"({len(alphabet)}, {size})")
 
-    # plt.plot(times_naive, label="Naive")
     # --------------- PLOT time execution ---------------
-    # plt.plot(times_kmp, label="KMP")
-    # plt.plot(times_rabin_karp, label="Rabin-Karp")
-    # plt.plot(times_booyer_moore, label="Booyer-Moore")
-    # plt.plot(times_booyer_moore_horspool, label="Booyer-Moore-Horspool")
-    # plt.xlabel("Pair (Alphabet Size, Pattern Size)")
-    # plt.ylabel("Time (s)")
-    # plt.xticks(range(len(times_kmp)), pairs_alphabet_pattern)
-    # plt.legend(loc="best")
-    # plt.show()
+    plt.plot(times_naive, label="Naive")
+    plt.plot(times_kmp, label="KMP")
+    plt.plot(times_rabin_karp, label="Rabin-Karp")
+    plt.plot(times_booyer_moore, label="Booyer-Moore")
+    plt.plot(times_booyer_moore_horspool, label="Booyer-Moore-Horspool")
+    plt.xlabel("Pair (Alphabet Size, Pattern Size)")
+    plt.ylabel("Time (s)")
+    plt.xticks(range(len(times_kmp)), pairs_alphabet_pattern)
+    plt.legend(loc="best")
+    plt.show()
 
     # ---------------- PLOT number of comparisons ---------------
     plt.plot(num_comparisons_naive, label="Naive")
@@ -168,6 +181,18 @@ def execute_analysis():
     plt.xlabel("Pair (Alphabet Size, Pattern Size)")
     plt.ylabel("Number of comparisons")
     plt.xticks(range(len(num_comparisons_kmp)), pairs_alphabet_pattern)
+    plt.legend(loc="best")
+    plt.show()
+
+    # ---------------- PLOT effort ---------------
+    plt.plot(effort_naive, label="Naive")
+    plt.plot(effort_kmp, label="KMP")
+    plt.plot(effort_rabin_karp, label="Rabin-Karp")
+    plt.plot(effort_booyer_moore, label="Booyer-Moore")
+    plt.plot(effort_booyer_moore_horspool, label="Booyer-Moore-Horspool")
+    plt.xlabel("Pair (Alphabet Size, Pattern Size)")
+    plt.ylabel("Effort")
+    plt.xticks(range(len(effort_kmp)), pairs_alphabet_pattern)
     plt.legend(loc="best")
     plt.show()
 

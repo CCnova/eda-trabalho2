@@ -24,9 +24,11 @@ def kmp_search(text: str, pattern: str):
     lps_table = compute_lps_table(pattern)
     start = time.time()
     number_of_comparisons = 0
+    effort = 0
     i = 0
     j = 0
     while i < len(text) and j < len(pattern):
+        effort += 1
         if text[i] == pattern[j]:
             number_of_comparisons += 1
             i += 1
@@ -42,10 +44,12 @@ def kmp_search(text: str, pattern: str):
             "found": True,
             "execution_time": time.time() - start,
             "comparisons": number_of_comparisons,
+            "effort": effort / len(text),
         }
 
     return {
         "found": False,
         "execution_time": time.time() - start,
         "comparisons": number_of_comparisons,
+        "effort": effort / len(text),
     }

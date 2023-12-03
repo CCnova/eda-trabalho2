@@ -21,9 +21,12 @@ def rabin_karp_search(txt, pat, d):
 
     start = time.time()
     number_of_comparisons = 0
+    effort = 0
     for i in range(N - M + 1):
+        effort += 1
         if p == t:
             for j in range(M):
+                effort += 1
                 if txt[i + j] != pat[j]:
                     number_of_comparisons += 1
                     break
@@ -35,6 +38,7 @@ def rabin_karp_search(txt, pat, d):
                     "found": True,
                     "execution_time": time.time() - start,
                     "comparisons": number_of_comparisons,
+                    "effort": effort / len(txt),
                 }
 
         if i < N - M:
@@ -46,4 +50,5 @@ def rabin_karp_search(txt, pat, d):
         "found": False,
         "execution_time": time.time() - start,
         "comparisons": number_of_comparisons,
+        "effort": effort / len(txt),
     }
